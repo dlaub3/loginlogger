@@ -15,3 +15,10 @@
  - Docker
  - Webpack
  - React
+
+## Goals
+
+ - [ ] Server Push
+ - [ ] Offline Form Handling
+ - [ ] Follow MVC Pattern?
+ - [ ] Session Management

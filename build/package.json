@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "path": "^0.12.7",
+    "promise-polyfill": "^6.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
