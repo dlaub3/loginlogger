@@ -3,7 +3,15 @@
 
 ## Scope
 
- - [  ] Login/logout
- - [  ] Store logins in MYSQL
- - [  ] Home screen displays logins/attempts
- - [  ] Logout screen
+ - [ ] Login/logout
+ - [ ] Store logins in MYSQL
+ - [ ] Home screen displays logins/attempts
+ - [ ] Logout screen
+
+## Tools
+
+ - PHP >=7.0
+ - MYSQL
+ - Docker
+ - Webpack
+ - React
