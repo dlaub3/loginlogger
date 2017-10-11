@@ -1,2 +1,4 @@
+// CSS
 import "./scss/main.scss";
-document.querySelector("#app").innerHTML = "Hello APP! :)";
+// React
+require('./scripts/React.js');
