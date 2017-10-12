@@ -2,6 +2,7 @@ import React from 'react';
 import LoginForm from './LoginForm.jsx';
 import NewUserForm from './NewUserForm.jsx';
 import BootstrapButton from './BootstrapButton.jsx';
+import LogoutButton from './LogoutButton.jsx';
 import Dashboard from './Dashboard.jsx';
 import { Transition } from 'react-transition-group';
 
@@ -21,14 +22,18 @@ export default class App extends React.Component {
 
     return (
       <div>
-      <NewUserForm />
+      <nav>
+      <LogoutButton />
+      <LoginForm />
       <Dashboard/>
-
-      { this.state.toggleBootstrap ?
-        <BootstrapButton toggleBootstrap={this.toggleBootstrap} /> :
-        <div>Databases created successfully &#x1F44D; </div>
-      }
-        <LoginForm />
+      <NewUserForm />
+      </nav>
+        <div>
+        { this.state.toggleBootstrap ?
+          <BootstrapButton toggleBootstrap={this.toggleBootstrap} /> :
+          <div>Databases created successfully &#x1F44D; </div>
+        }
+        </div>
       </div>
     );
   }

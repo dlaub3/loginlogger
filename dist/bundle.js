@@ -22294,6 +22294,10 @@ var _BootstrapButton = __webpack_require__(42);
 
 var _BootstrapButton2 = _interopRequireDefault(_BootstrapButton);
 
+var _LogoutButton = __webpack_require__(59);
+
+var _LogoutButton2 = _interopRequireDefault(_LogoutButton);
+
 var _Dashboard = __webpack_require__(57);
 
 var _Dashboard2 = _interopRequireDefault(_Dashboard);
@@ -22330,14 +22334,23 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_NewUserForm2.default, null),
-        _react2.default.createElement(_Dashboard2.default, null),
-        this.state.toggleBootstrap ? _react2.default.createElement(_BootstrapButton2.default, { toggleBootstrap: this.toggleBootstrap }) : _react2.default.createElement(
+        _react2.default.createElement(
+          'nav',
+          null,
+          _react2.default.createElement(_LogoutButton2.default, null),
+          _react2.default.createElement(_LoginForm2.default, null),
+          _react2.default.createElement(_Dashboard2.default, null),
+          _react2.default.createElement(_NewUserForm2.default, null)
+        ),
+        _react2.default.createElement(
           'div',
           null,
-          'Databases created successfully \uD83D\uDC4D '
-        ),
-        _react2.default.createElement(_LoginForm2.default, null)
+          this.state.toggleBootstrap ? _react2.default.createElement(_BootstrapButton2.default, { toggleBootstrap: this.toggleBootstrap }) : _react2.default.createElement(
+            'div',
+            null,
+            'Databases created successfully \uD83D\uDC4D '
+          )
+        )
       );
     }
   }, {
@@ -22462,6 +22475,7 @@ var LoginForm = function (_React$Component) {
     value: function handleFetch() {
       fetch('/app/login.php', {
         method: 'post',
+        credentials: 'include',
         headers: {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
         },
@@ -22516,9 +22530,6 @@ var LoginForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = LoginForm;
-
-
-module.exports = LoginForm;
 
 /***/ }),
 /* 42 */
@@ -22575,8 +22586,7 @@ var BootstrapButton = function (_React$Component) {
           { onClick: this.handleClick },
           ' Bootstrap '
         ),
-        this.state.msg ? this.handleMsg() : null,
-        this.props.children
+        this.state.msg ? this.handleMsg() : null
       );
     }
   }, {
@@ -24683,27 +24693,19 @@ var Dashboard = function (_React$Component) {
       var _this2 = this;
 
       fetch('/app/dashboard.php', {
-        method: 'get'
+        method: 'get',
+        credentials: 'include'
       }).then(function (response) {
         return response.json();
       }).then(function (data) {
         // display data
-        _this2.setState({
-          msg: data
-        });
-        // if(data.error.length !== 0) {
-        //   this.setState({
-        //     msg: data.error
-        //   });
-        // }
-        // else if(data.success) {
-        //   this.setState({
-        //     msg: data.success,
-        //   });
-        //   this.props.toggleBootstrap();
-        // } else {
-        //   console.log(data);
-        // }
+        if (data) {
+          _this2.setState({
+            msg: data
+          });
+        } else {
+          console.log(data);
+        }
       }).catch(function (err) {
         // if errors
         // this is for development
@@ -24715,7 +24717,19 @@ var Dashboard = function (_React$Component) {
     key: 'handleMsg',
     value: function handleMsg() {
       var msg = [];
-      if (this.state.msg) {
+      if (this.state.msg[0].error) {
+        msg = this.state.msg.map(function (msg) {
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'span',
+              null,
+              msg.error
+            )
+          );
+        });
+      } else {
         msg = this.state.msg.map(function (msg) {
           return _react2.default.createElement(
             'div',
@@ -24860,6 +24874,7 @@ var NewUserForm = function (_React$Component) {
     value: function handleFetch() {
       fetch('/app/new_user.php', {
         method: 'post',
+        credentials: 'include',
         headers: {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
         },
@@ -24915,8 +24930,121 @@ var NewUserForm = function (_React$Component) {
 
 exports.default = NewUserForm;
 
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = NewUserForm;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LogoutButton = function (_React$Component) {
+  _inherits(LogoutButton, _React$Component);
+
+  function LogoutButton() {
+    _classCallCheck(this, LogoutButton);
+
+    var _this = _possibleConstructorReturn(this, (LogoutButton.__proto__ || Object.getPrototypeOf(LogoutButton)).call(this));
+
+    _this.state = {
+      msg: ""
+    };
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.handleFetch = _this.handleFetch.bind(_this);
+    _this.handleMsg = _this.handleMsg.bind(_this);
+    return _this;
+  }
+
+  _createClass(LogoutButton, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'button',
+          { onClick: this.handleClick },
+          ' Logout '
+        ),
+        this.state.msg ? this.handleMsg() : null
+      );
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(e) {
+      e.preventDefault();
+      this.handleFetch();
+    }
+  }, {
+    key: 'handleFetch',
+    value: function handleFetch() {
+      var _this2 = this;
+
+      fetch('/app/logout.php', {
+        method: 'get',
+        credentials: 'include'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        // display data
+        if (data.error.length !== 0) {
+          _this2.setState({
+            msg: data.error
+          });
+        } else if (data.success) {
+          _this2.setState({
+            msg: data.success
+          });
+        } else {
+          console.log(data);
+        }
+      }).catch(function (err) {
+        // if errors
+        // this is for development
+        // only!
+        console.log(err);
+      });
+    }
+  }, {
+    key: 'handleMsg',
+    value: function handleMsg() {
+      var msg = [];
+      if (this.state.msg) {
+        msg = this.state.msg.map(function (msg) {
+          return _react2.default.createElement(
+            'p',
+            null,
+            msg
+          );
+        });
+      }
+      return msg;
+    }
+  }]);
+
+  return LogoutButton;
+}(_react2.default.Component);
+
+exports.default = LogoutButton;
 
 /***/ })
 /******/ ]);

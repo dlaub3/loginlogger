@@ -50,6 +50,7 @@ export default class LoginForm extends React.Component {
   handleFetch() {
     fetch('/app/login.php', {
       method: 'post',
+      credentials: 'include',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
       },
@@ -89,5 +90,3 @@ export default class LoginForm extends React.Component {
     return msg;
   }
 }
-
-module.exports = LoginForm;

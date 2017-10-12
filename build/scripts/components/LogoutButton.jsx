@@ -1,7 +1,7 @@
 import React from 'react';
 import 'whatwg-fetch';
 
-export default class BootstrapButton extends React.Component {
+export default class LogoutButton extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -15,7 +15,7 @@ export default class BootstrapButton extends React.Component {
   render() {
     return (
       <div>
-      <button onClick={this.handleClick}> Bootstrap </button>
+      <button onClick={this.handleClick}> Logout </button>
           {this.state.msg ? this.handleMsg() : null}
       </div>
     );
@@ -25,8 +25,9 @@ export default class BootstrapButton extends React.Component {
     this.handleFetch();
   }
   handleFetch() {
-    fetch('/app/db_bootstrap.php', {
+    fetch('/app/logout.php', {
         method: 'get',
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(data =>  {
@@ -40,7 +41,6 @@ export default class BootstrapButton extends React.Component {
         this.setState({
           msg: data.success,
         });
-        this.props.toggleBootstrap();
       } else {
         console.log(data);
       }

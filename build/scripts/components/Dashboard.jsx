@@ -27,26 +27,18 @@ export default class Dashboard extends React.Component {
   handleFetch() {
     fetch('/app/dashboard.php', {
         method: 'get',
+        credentials: 'include'
     })
     .then(response => response.json())
     .then(data =>  {
       // display data
-      this.setState({
-        msg: data
-      });
-      // if(data.error.length !== 0) {
-      //   this.setState({
-      //     msg: data.error
-      //   });
-      // }
-      // else if(data.success) {
-      //   this.setState({
-      //     msg: data.success,
-      //   });
-      //   this.props.toggleBootstrap();
-      // } else {
-      //   console.log(data);
-      // }
+      if(data) {
+        this.setState({
+          msg: data,
+        });
+      } else {
+        console.log(data);
+      }
     })
     .catch(function(err) {
       // if errors
@@ -57,8 +49,19 @@ export default class Dashboard extends React.Component {
   }
   handleMsg() {
     let msg = [];
-    if (this.state.msg) {
-      msg = this.state.msg.map((msg) => {return <div><span>{msg.id}</span><span>{msg.email}</span><span>{msg.date}</span><span>{msg.success}</span></div>})
+    if (this.state.msg[0].error) {
+      msg = this.state.msg.map((msg) => {
+        return <div>
+                <span>{msg.error}</span>
+              </div>})
+    } else {
+      msg = this.state.msg.map((msg) => {
+        return <div>
+                <span>{msg.id}</span>
+                <span>{msg.email}</span>
+                <span>{msg.date}</span>
+                <span>{msg.success}</span>
+              </div>})
     }
     return msg;
   }
