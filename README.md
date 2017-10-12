@@ -22,3 +22,8 @@
  - [ ] Offline Form Handling
  - [ ] Follow MVC Pattern?
  - [ ] Session Management
+
+## To Do
+
+ - [ ] Validate email on front end
+ 

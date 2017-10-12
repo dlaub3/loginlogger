@@ -1,4 +1,5 @@
 <?php
+
 require_once('db.php');
 
 if (!isset($_POST)) {
@@ -8,7 +9,7 @@ if (!isset($_POST)) {
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-function log_loggin($email, $success)
+function new_user($email, $password)
 {
     $db = new mysqli(DB_SERV, DB_USER, DB_PASS, DB_NAME);
     $msg = ["error" => [], "success" => []];
@@ -21,23 +22,22 @@ function log_loggin($email, $success)
       array_push($msg['success'], "Established DB connection. :) ");
   }
     // prepare and bind
-    $stmt = $db->prepare("INSERT INTO login_attempts (success, email)
+    $stmt = $db->prepare("INSERT INTO users ( email, hashed_password )
           VALUES (?, ?)");
-    $stmt->bind_param("ss", $success, $email);
+    $email = $email;
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    array_push($msg['error'], htmlspecialchars($db->error));
+    $stmt->bind_param("ss", $email, $password);
+    array_push($msg['error'], htmlspecialchars($stmt->error));
     $stmt->execute();
-    //
-    // if ($db->query($sql) === true) {
-    //     array_push($msg['success'], "New record created successfully");
-    // } else {
-    //     array_push($msg['error'], $conn->error);
-    // }
+    array_push($msg['error'], htmlspecialchars($stmt->error));
     $stmt->close();
     $db->close();
 
     return json_encode($msg);
 }
 
-$log = log_loggin($email, 1);
+$log = new_user($email, $password);
 echo $log;
 
 // log all login attempts to DB

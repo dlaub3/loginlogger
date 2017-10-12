@@ -1,52 +1,40 @@
 import React from 'react';
 import LoginForm from './LoginForm.jsx';
-import 'whatwg-fetch';
+import NewUserForm from './NewUserForm.jsx';
+import BootstrapButton from './BootstrapButton.jsx';
+import Dashboard from './Dashboard.jsx';
+import { Transition } from 'react-transition-group';
+
 
 export default class App extends React.Component {
+
   constructor() {
     super();
     this.state = {
-      username: 'John',
-      password: 'pass'
+      toggleBootstrap: true,
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleBootstrap = this.toggleBootstrap.bind(this);
   }
 
   render() {
+
+
     return (
       <div>
-        <LoginForm onSubmit={this.handleSubmit}
-               onChange = {this.handleChange}
-        />
+      <NewUserForm />
+      <Dashboard/>
+
+      { this.state.toggleBootstrap ?
+        <BootstrapButton toggleBootstrap={this.toggleBootstrap} /> :
+        <div>Databases created successfully &#x1F44D; </div>
+      }
+        <LoginForm />
       </div>
     );
   }
-  handleSubmit(e) {
-    e.preventDefault();
-    alert([this.state.username, this.state.password]);
-    fetch('/app/login.php', {
-        method: 'post',
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
-        body: `username=${this.state.username}&password=${this.state.password}`
-    })
-    .then(function(response) {
-      // display data
-      alert(response);
-    })
-    .catch(function(err) {
-      // if errors
+  toggleBootstrap() {
+    this.setState({
+      toggleBootstrap: !this.state.toggleBootstrap
     });
-
-  }
-  handleChange(e) {
-    if (e.target.name === 'password') {
-      this.setState({password: e.target.value});
-    }
-    if (e.target.name === 'username') {
-      this.setState({username: e.target.value});
-    }
   }
 }

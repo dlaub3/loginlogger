@@ -25,3 +25,19 @@ function has_length_less_than(string $value, int $max):bool
     $length = strlen($value);
     return $length < $max;
 }
+
+function has_inclusion_of($value, $set)
+{
+    return in_array($value, $set);
+}
+
+function has_exclusion_of($value, $set)
+{
+    return !in_array($value, $set);
+}
+
+function has_valid_email_format($value)
+{
+    $email_regex = '/\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\Z/i';
+    return preg_match($email_regex, $value) === 1;
+}

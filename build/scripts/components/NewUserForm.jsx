@@ -2,7 +2,7 @@ import React from 'react';
 import 'whatwg-fetch';
 import validation from '../validation.js';
 
-export default class LoginForm extends React.Component {
+export default class NewUserForm extends React.Component {
 
   constructor() {
     super();
@@ -22,12 +22,12 @@ export default class LoginForm extends React.Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit} className="" action="/app/login.php" method="post">
+        <form onSubmit={this.handleSubmit} className="" action="/app/new_user.php" method="post">
           <label htmlFor="email">Email:</label>
           <input type="email" name="email" value={this.state.value} onChange={this.handleChange}/><br/>
           <label htmlFor="password">Password:</label>
           <input type="password" name="password" value={this.state.value} onChange={this.handleChange}/><br/>
-          <button type="submit" name="login">Login</button>
+          <button type="submit" name="login">Create Account</button>
         </form>
           {this.state.error ? this.handleError() : null}
       </div>
@@ -48,7 +48,7 @@ export default class LoginForm extends React.Component {
     }
   }
   handleFetch() {
-    fetch('/app/login.php', {
+    fetch('/app/new_user.php', {
       method: 'post',
       headers: {
         "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -90,4 +90,4 @@ export default class LoginForm extends React.Component {
   }
 }
 
-module.exports = LoginForm;
+module.exports = NewUserForm;
