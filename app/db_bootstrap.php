@@ -1,5 +1,5 @@
 <?php
-require_once('db.php');
+require_once('initialize.php');
 
 //create connection
 $db = new mysqli(DB_SERV, DB_USER, DB_PASS, DB_NAME);

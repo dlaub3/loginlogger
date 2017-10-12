@@ -1,13 +1,10 @@
 <?php
-session_start();
+require_once('initialize.php');
+require_once('ClassAuthentication.php');
 
-function logout_user()
-{
-    unset($_SESSION['user_id']);
-    unset($_SESSION['user_name']);
-    unset($_SESSION['last_login']);
-    return true;
+$auth = new Authenticate;
+$logout = $auth->logout_user();
+
+if ($logout) {
+    echo json_encode(["error" => [],"success" => ["You have been logged out."]]);
 }
-
-logout_user();
-echo json_encode(["error" => [],"success" => ["You have been logged out."]]);

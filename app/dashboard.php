@@ -1,7 +1,6 @@
 <?php
-require_once('db.php');
+require_once('initialize.php');
 
-session_start();
 
 function is_logged_in()
 {
