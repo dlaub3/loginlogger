@@ -25,7 +25,7 @@ export default class BootstrapButton extends React.Component {
     this.handleFetch();
   }
   handleFetch() {
-    fetch('/app/db_bootstrap.php', {
+    fetch('/app/bootstrap.php', {
         method: 'get',
     })
     .then(response => response.json())

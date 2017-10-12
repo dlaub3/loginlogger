@@ -9,6 +9,7 @@
     "promise-polyfill": "^6.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.1",
     "webpack": "^3.6.0",
     "whatwg-fetch": "^2.0.3"

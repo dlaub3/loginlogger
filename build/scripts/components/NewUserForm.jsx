@@ -57,6 +57,9 @@ export default class NewUserForm extends React.Component {
       body: `email=${this.state.email}&password=${this.state.password}`
     }).then(response => response.json()).then(data => {
       // display data
+      if(data.error.length !== 0) {
+        this.setState({error: data.error});
+      }
       console.log(data);
     }).catch(function(err) {
       // if errors

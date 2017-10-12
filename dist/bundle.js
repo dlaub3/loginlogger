@@ -22600,7 +22600,7 @@ var BootstrapButton = function (_React$Component) {
     value: function handleFetch() {
       var _this2 = this;
 
-      fetch('/app/db_bootstrap.php', {
+      fetch('/app/bootstrap.php', {
         method: 'get'
       }).then(function (response) {
         return response.json();
@@ -24872,6 +24872,8 @@ var NewUserForm = function (_React$Component) {
   }, {
     key: 'handleFetch',
     value: function handleFetch() {
+      var _this2 = this;
+
       fetch('/app/new_user.php', {
         method: 'post',
         credentials: 'include',
@@ -24883,6 +24885,9 @@ var NewUserForm = function (_React$Component) {
         return response.json();
       }).then(function (data) {
         // display data
+        if (data.error.length !== 0) {
+          _this2.setState({ error: data.error });
+        }
         console.log(data);
       }).catch(function (err) {
         // if errors
