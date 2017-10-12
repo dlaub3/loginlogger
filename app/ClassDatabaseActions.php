@@ -32,6 +32,18 @@ class DatabaseActions
         }
     }
 
+    public function new_user($email, $password)
+    {
+        // prepare and bind
+        $stmt = $this->conn->prepare("INSERT INTO users ( email, hashed_password )
+              VALUES (?, ?)");
+        $email = $email;
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param("ss", $email, $password);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     public function __destruct()
     {
         //close databse connection
