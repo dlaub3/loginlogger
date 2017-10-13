@@ -3,11 +3,10 @@ const validation = (function() {
   let validatePassword = function(password, options) {
     let error = [];
     if (!has_length_greater_than(password, options['min'])) {
-      error.push(`Password must be great than ${options['min']}`);
-      error.push(`Password must be great than ${options['min']}`);
+      error.push(`Password must be greater than ${options['min']} charaters.`);
     }
     if (!has_length_less_than(password, options['max'])) {
-      error.push(`Password must be less than ${options['max']}`);
+      error.push(`Password must be less than ${options['max']} charaters.`);
     }
     if (error.length === 0) {
       return true;

@@ -13,7 +13,7 @@ class Validation
         $msg = ["error" => [], "success" => []];
         $max = $options['max'];
         $min = $options['min'];
-        
+
         if (!$this->has_presence($string)) {
             array_push($msg["error"], "The password is empty.");
         }
@@ -23,7 +23,7 @@ class Validation
         if (!$this->has_length_less_than($string, $max)) {
             array_push($msg["error"], "The password must be less than $max charaters.");
         }
-        if ($msg) {
+        if ($msg["error"]) {
             return $msg;
         } else {
             return true;

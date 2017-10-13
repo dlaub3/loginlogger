@@ -1,11 +1,95 @@
-#app {
-  padding: 2em;
-  background: salmon;
-  color: teal;
-  font-size: 2rem;
+body {
+  background: #1c1f2b;
 }
 
-span {
+#app {
+  padding: 1em;
+  color: #bdcadb;
+}
+
+.flex-column {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+form button,
+form input {
+  margin: 0.2em;
   padding: 0.2em;
-  background: papayawhip;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background: silver;
+  font-size: 20px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+ul {
+  margin: 0;
+}
+
+ul.logins {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 65%;
+  max-width: 98%;
+  margin: 0;
+}
+
+ul.logins > li:nth-child(odd) {
+  background: steelblue;
+}
+
+ul.logins > li:nth-child(even) {
+  background: #2d3143;
+}
+
+ul.logins > li {
+  margin: 0;
+  padding: 0 1em;
+}
+
+.date,
+.email,
+.id,
+.success {
+  display: inline-block;
+  width: 25%;
+  padding: 1em;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul > li {
+  display: inline-block;
+  padding: 0.2em 1em;
+  list-style-type: none;
+}
+
+li > a {
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+a,
+a:active,
+a:hover,
+a:visited {
+  color: #4183c4;
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import 'whatwg-fetch';
+import { connect } from 'react-redux';
+import store from '../store';
+import {persistStore, AsyncStorage } from 'redux-persist';
 
-export default class LogoutButton extends React.Component {
+
+class LogoutButton extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -16,7 +20,7 @@ export default class LogoutButton extends React.Component {
     return (
       <div>
       <button onClick={this.handleClick}> Logout </button>
-          {this.state.msg ? this.handleMsg() : null}
+          {/*this.state.msg ? this.handleMsg() : null*/}
       </div>
     );
   }
@@ -38,7 +42,11 @@ export default class LogoutButton extends React.Component {
         });
       }
       else if(data.success) {
-        this.setState({
+       store.dispatch({
+            type: 'LOGIN',
+            auth: false
+          });
+       this.setState({
           msg: data.success,
         });
       } else {
@@ -60,3 +68,14 @@ export default class LogoutButton extends React.Component {
     return msg;
   }
 }
+
+const mapLoginStateToProps = function(store) {
+  return {
+    auth: store.loginState.auth
+    };
+}
+
+export default connect(mapLoginStateToProps)(LogoutButton);
+
+//presist redux store to localstorage
+persistStore(store, {storage: AsyncStorage});

@@ -1,4 +1,5 @@
 <?php
+require_once('ClassDatabaseActions.php');
 
 class ProtectedDatabaseActions extends DatabaseActions
 {

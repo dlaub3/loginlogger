@@ -12,6 +12,7 @@ if (!isset($_POST)) {
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
 }
+
 if (isset($_POST['password'])) {
     $password = $_POST['password'];
     $validate = new Validation;
@@ -22,6 +23,9 @@ if (isset($_POST['password'])) {
 if ($valid_password === true) {
     $conn = new DatabaseActions;
     $user = $conn->new_user($email, $password);
+    if ($user) {
+        echo json_encode(["error" => [], "success" => ["User created!"]]);
+    }
 } else {
     echo json_encode($valid_password);
 }

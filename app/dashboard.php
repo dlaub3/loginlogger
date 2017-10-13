@@ -1,7 +1,8 @@
 <?php
+ini_set('display_errors', 'on');
 require_once('initialize.php');
 require_once('ClassAuthorization.php');
-require_once('ProtectedDatabaseActions');
+require_once('ClassProtectedDatabaseActions.php');
 
 $authz = new Authorization;
 $authorized = $authz->verify_login();

@@ -40,8 +40,9 @@ class Bootstrap extends DatabaseActions
         //create tables
         $msg = ["error" => [], "success" => []];
 
-        if ($this->check_tables === false) {
-            array_push($msg["error"], "Tables do not exist.");
+        if ($this->check_tables() === true) {
+            array_push($msg["success"], "Tables exist.");
+            return json_encode($msg);
             exit;
         }
         $user_table = "CREATE TABLE users(

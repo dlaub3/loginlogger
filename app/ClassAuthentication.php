@@ -11,12 +11,15 @@ class Authenticate
             if (password_verify($password, $user['hash'])) {
                 $this->set_session($user);
                 // array_push($this->$msg['success'], "Successful login!");
+
                 //successful login
                 $this->log_loggin($user['email'], 1);
+                return true;
             } else {
                 // array_push(self::$msg['error'], "Login error!");
                 //login failure
                 $this->log_loggin($user['email'], 0);
+                return false;
             }
         }
     }

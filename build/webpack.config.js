@@ -9,6 +9,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   module: {
     loaders: [{
@@ -30,6 +31,9 @@ const config = {
         ],
       },
     ]
+  },
+  devServer: {
+    historyApiFallback: true
   },
   plugins: [
     new BrowserSyncPlugin({

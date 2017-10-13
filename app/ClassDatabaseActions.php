@@ -42,6 +42,7 @@ class DatabaseActions
         $stmt->bind_param("ss", $email, $password);
         $stmt->execute();
         $stmt->close();
+        return true;
     }
 
     public function __destruct()

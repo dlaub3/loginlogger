@@ -1,7 +1,10 @@
 import React from 'react';
 import 'whatwg-fetch';
+import { connect } from 'react-redux';
+import store from '../store';
+import { Redirect } from 'react-router-dom';
 
-export default class BootstrapButton extends React.Component {
+class BootstrapButton extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -13,9 +16,18 @@ export default class BootstrapButton extends React.Component {
   }
 
   render() {
+    if(!this.props.tables) {
+      return <Redirect to="/new-user" />;
+    }
     return (
-      <div>
-      <button onClick={this.handleClick}> Bootstrap </button>
+      <div className="flex-column">
+      <p> You must first bootstrap the database. </p>
+      {
+        this.props.tables ?
+        <button onClick={this.handleClick}> Bootstrap </button> :
+        <div>Databases created successfully &#x1F44D; </div>
+      }
+          {/* This will display error message when it's hooked up.*/}
           {this.state.msg ? this.handleMsg() : null}
       </div>
     );
@@ -31,24 +43,16 @@ export default class BootstrapButton extends React.Component {
     .then(response => response.json())
     .then(data =>  {
       // display data
-      if(data.error.length !== 0) {
-        this.setState({
-          msg: data.error
+      if(data.success) {
+        store.dispatch({
+          type: 'BOOTSTRAP',
+          bootstrap: false
         });
-      }
-      else if(data.success) {
-        this.setState({
-          msg: data.success,
-        });
-        this.props.toggleBootstrap();
       } else {
         console.log(data);
       }
     })
     .catch(function(err) {
-      // if errors
-      // this is for development
-      // only!
       console.log(err)
     });
   }
@@ -60,3 +64,11 @@ export default class BootstrapButton extends React.Component {
     return msg;
   }
 }
+
+const mapBootstrapStateToProps = function(store) {
+  return {
+    tables: store.bootstrapState.tables
+    };
+}
+// export default BootstrapButton;
+export default connect(mapBootstrapStateToProps)(BootstrapButton);

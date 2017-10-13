@@ -1,15 +1,19 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import 'whatwg-fetch';
 import validation from '../validation.js';
+import { connect } from 'react-redux';
+import store from '../store';
 
-export default class NewUserForm extends React.Component {
+class NewUserForm extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      email: 'admin@example.com',
-      password: 'password',
-      error: null
+      email: '',
+      password: '',
+      error: null,
+      success: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,14 +23,17 @@ export default class NewUserForm extends React.Component {
   }
 
   render() {
-
+    if(this.state.success){
+    return <Redirect to="/login" />;
+    }
+    if(this.props.auth) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
-      <div>
+      <div className="flex-column">
         <form onSubmit={this.handleSubmit} className="" action="/app/new_user.php" method="post">
-          <label htmlFor="email">Email:</label>
-          <input type="email" name="email" value={this.state.value} onChange={this.handleChange}/><br/>
-          <label htmlFor="password">Password:</label>
-          <input type="password" name="password" value={this.state.value} onChange={this.handleChange}/><br/>
+          <input type="email" name="email" value={this.state.value} onChange={this.handleChange} placeholder="Email"/><br/>
+          <input type="password" name="password" value={this.state.value} onChange={this.handleChange} placeholder="Password"/><br/>
           <button type="submit" name="login">Create Account</button>
         </form>
           {this.state.error ? this.handleError() : null}
@@ -59,6 +66,9 @@ export default class NewUserForm extends React.Component {
       // display data
       if(data.error.length !== 0) {
         this.setState({error: data.error});
+      }
+      if(data.success){
+        this.setState({success: true});
       }
       console.log(data);
     }).catch(function(err) {
@@ -93,3 +103,11 @@ export default class NewUserForm extends React.Component {
     return msg;
   }
 }
+
+const mapLoginStateToProps = function(store) {
+  return {
+    auth: store.loginState.auth
+    };
+}
+
+export default connect(mapLoginStateToProps)(NewUserForm);

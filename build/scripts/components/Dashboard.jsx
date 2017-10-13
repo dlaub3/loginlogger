@@ -1,7 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import 'whatwg-fetch';
+import { connect } from 'react-redux';
+import store from '../store';
+import {persistStore, AsyncStorage } from 'redux-persist';
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -13,12 +17,25 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
+    if(!this.props.auth) {
+      return <Redirect to="/login" />;
+    }
     return (
-      <div>
-      <button onClick={this.handleClick}> Dashboard </button>
-          {this.state.msg ? this.handleMsg() : null}
+      <div className="login-container">
+       <ul className="logins">
+       <li>
+         <span className="id">ID</span>
+         <span className="email">Email</span>
+         <span className="date">Date</span>
+         <span className="success">Success</span>
+      </li>
+          {this.state.msg ? this.handleMsg() : <p> Something went wrong. :(</p>}
+       </ul>
       </div>
     );
+  }
+  componentWillMount(){
+    this.handleFetch();
   }
   handleClick(e) {
     e.preventDefault();
@@ -55,14 +72,23 @@ export default class Dashboard extends React.Component {
                 <span>{msg.error}</span>
               </div>})
     } else {
-      msg = this.state.msg.map((msg) => {
-        return <div>
-                <span>{msg.id}</span>
-                <span>{msg.email}</span>
-                <span>{msg.date}</span>
-                <span>{msg.success}</span>
-              </div>})
+      msg = this.state.msg.map((msg, index) => {
+        return <li key={index}>
+                <span className="id">{msg.id}</span>
+                <span className="email">{msg.email}</span>
+                <span className="date">{msg.date}</span>
+                <span className="success">{msg.success}</span>
+              </li>})
     }
     return msg;
   }
 }
+const mapLoginStateToProps = function(store) {
+  return {
+    auth: store.loginState.auth
+    };
+}
+export default connect(mapLoginStateToProps)(Dashboard);
+
+//presist redux store to localstorage
+persistStore(store, {storage: AsyncStorage});

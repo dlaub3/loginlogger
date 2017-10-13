@@ -19,4 +19,8 @@ $user = $conn->get_user_by_email($email);
 if ($user) {
     $auth = new Authenticate;
     $login = $auth->login($user, $password);
+    if ($login) {
+        $msg = ["error" => [], "success" => ["Hey, your email and password match up!"]];
+        echo json_encode($msg);
+    }
 }
